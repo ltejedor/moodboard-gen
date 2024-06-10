@@ -3,6 +3,7 @@ import base64
 import numpy as np
 from PIL import Image
 import io
+import requests
 
 import replicate
 from flask import Flask, request
@@ -59,8 +60,14 @@ def image_classifier(moodboard, prompt):
         input=input
     )
     
-    return output[0]  # Return the URL of the generated image
+    # Download the image from the URL
+    image_url = output[0]
+    response = requests.get(image_url)
+    img = Image.open(io.BytesIO(response.content))
     
+    return img  # Return the image object
+
+
 app = Flask(__name__)
 os.environ.get("REPLICATE_API_TOKEN")
 
