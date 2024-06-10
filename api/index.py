@@ -62,7 +62,9 @@ def image_classifier(moodboard, prompt):
     
     # Download the image from the URL
     image_url = output[0]
+    print(image_url)
     response = requests.get(image_url)
+    print(response)
     img = Image.open(io.BytesIO(response.content))
     
     return img  # Return the image object
@@ -73,5 +75,5 @@ os.environ.get("REPLICATE_API_TOKEN")
 
 @app.route("/")
 def index():
-    demo = gr.Interface(fn=image_classifier, inputs=["image", "text"], outputs="label")
+    demo = gr.Interface(fn=image_classifier, inputs=["image", "text"], outputs="image")
     demo.launch()
