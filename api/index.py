@@ -12,11 +12,7 @@ from openai import OpenAI
 
 client = OpenAI()
 
-def image_classifier(moodboard, prompt):
-
-    # Convert the numpy array to a PIL image
-    pil_image = Image.fromarray(moodboard.astype('uint8'))
-    
+def call_openai(pil_image):
     # Save the PIL image to a bytes buffer
     buffered = io.BytesIO()
     pil_image.save(buffered, format="JPEG")
@@ -43,10 +39,15 @@ def image_classifier(moodboard, prompt):
         max_tokens=300,
     )
     
-    openai_response = response.choices[0].message.content
+    return response.choices[0].message.content
+
+def image_classifier(moodboard, prompt):
+
+    # Convert the numpy array to a PIL image
+    pil_image = Image.fromarray(moodboard.astype('uint8'))
     
-    openai_response="test"
-    
+    openai_response = call_openai(pil_image)
+        
     # Call Stable Diffusion API with the response from OpenAI
     input = {
         "width": 768,
