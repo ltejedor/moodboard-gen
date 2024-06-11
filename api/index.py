@@ -8,13 +8,12 @@ import requests
 import replicate
 from flask import Flask, request
 import gradio as gr
-#from openai import OpenAI
+from openai import OpenAI
 
-#client = OpenAI()
+client = OpenAI()
 
 def image_classifier(moodboard, prompt):
 
-    '''
     # Convert the numpy array to a PIL image
     pil_image = Image.fromarray(moodboard.astype('uint8'))
     
@@ -45,7 +44,7 @@ def image_classifier(moodboard, prompt):
     )
     
     openai_response = response.choices[0].message.content
-    '''
+    
     openai_response="test"
     
     # Call Stable Diffusion API with the response from OpenAI
